@@ -22,11 +22,9 @@ gift <- gift %>%
   str_replace("y$", "ie") %>% 
   paste("s", sep = "") %>% 
   str_replace_all("ss$", "s") %>% 
-  str_replace("ooses$", "eese") %>% 
-  str_replace("partridges", "partridge") %>% 
-  str_replace("emails", "email")
+  str_replace("ooses$", "eese")
 
-return(gift)
+  return(gift)
 
 }
 ```
@@ -34,17 +32,15 @@ return(gift)
 ```{r creating sentences}
 make_phrase <- function(num, num_word, item, verb, adjective, location) {
   
-  item <- pluralize_gift(item)
   verb <- replace_na(verb, "")
   item <- replace_na(item, "")
   adjective <- replace_na(adjective, "")
   location <- replace_na(location, "")
-  num_word <- as.character(english(num)) %>% 
-    str_replace_all("one", "and a")
   
   
   a_and_an <- str_sub(item, 1, 1) %>% 
     str_detect("[aeiou]")
+  
   if (num > 1) {
     item <- pluralize_gift(item)
   } else if (a_and_an == TRUE) {
@@ -79,6 +75,7 @@ sing_day <- function(dataset, line, phrase_col){
   beginning <- glue("On the {line_as_word} day of Christmas, my true love gave to me,")
   
 
+  phrases[1] <- paste("and", phrases[1], ".")
   phrase_lines <- str_c(phrases[line:1], collapse = ", \n")
 
   
